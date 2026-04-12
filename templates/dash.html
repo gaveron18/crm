@@ -372,14 +372,9 @@ function dashGetSrc(json) {
 }
 
 function dashGetRecord(json) {
-    if (!json || json.error || !json.val) {
-        dashSetStatus('Дэшборд не найден');
-        return;
-    }
+    if (!json || json.error || !json.val) return;
     var titleEl = document.getElementById('dash-title');
     if (titleEl) titleEl.textContent = json.val;
-    dashSetStatus('Загрузка модели...');
-    newApi('GET', 'report/Дэшборд?JSON_KV&FR_modelID=' + json.id, 'dashGetModel');
 }
 
 function dashGetModel(json) {
@@ -482,6 +477,7 @@ window.dashLoad = function(dashId) {
     dashReset();
     dashSetStatus('Загрузка дэшборда...');
     newApi('GET', 'get_record/' + dashId, 'dashGetRecord');
+    newApi('GET', 'report/Дэшборд?JSON_KV&FR_modelID=' + dashId, 'dashGetModel');
 };
 
 window.dashSetActive = function(el) {
